@@ -23,11 +23,11 @@
     "map"
   ],
   "dependencies": {
-    "ap": "^0.2.0",
-    "dot-prop": "^2.1.0",
-    "is-object": "^1.0.1",
+    "ap": "~0.2.0",
+    "dot-prop": "~2.1.0",
+    "is-object": "~1.0.1",
     "isarray": "0.0.1",
-    "map-obj": "^1.0.1"
+    "map-obj": "~1.0.1"
   },
   "devDependencies": {
     "standard": "^4.0.0",
