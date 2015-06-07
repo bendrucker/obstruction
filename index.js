@@ -36,7 +36,7 @@ function createParser (object) {
     if (~key.indexOf('.')) {
       throw new Error('dots are not allowed in schema keys')
     }
-    var result, srcKey
+    var srcKey, result
     if (isArray(value)) {
       // value is [key, value]
       // destructure, then process normally
