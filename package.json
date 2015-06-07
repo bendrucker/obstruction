@@ -2,7 +2,7 @@
   "name": "obstruction",
   "main": "index.js",
   "version": "0.0.0",
-  "description": "Parse and modify the schema of an object",
+  "description": "Declarative parser for remapping object schemas and data",
   "license": "MIT",
   "repository": "bendrucker/obstruction",
   "author": {

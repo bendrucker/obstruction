@@ -1,7 +1,6 @@
 # obstruction [![Build Status](https://travis-ci.org/bendrucker/obstruction.svg?branch=master)](https://travis-ci.org/bendrucker/obstruction)
 
-> Parse and modify the schema of an object
-
+> Declarative parser for remapping object schemas and data
 
 ## Install
 
