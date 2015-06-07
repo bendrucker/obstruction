@@ -82,7 +82,7 @@ obstruct({foo: 'bar'})({foo: 'bar', bar: 'baz'}) // => {foo: 'baz'}
 Strings can also use dot syntax to access deep properties:
 
 ```js
-obstruct({foo: 'bar.baz'})({foo: {bar: 'baz'}}) // => {foo: 'baz'}
+obstruct({foo: 'a.bar'})({a: {bar: 'baz'}}) // => {foo: 'baz'}
 ```
 
 #### a function
