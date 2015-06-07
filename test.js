@@ -3,8 +3,44 @@
 var test = require('tape')
 var obstruct = require('./')
 
-test(function (t) {
+test('obstruction', function (t) {
+  t.deepEqual(obstruct({foo: true})({foo: 'bar'}), {
+    foo: 'bar'
+  }, 'passthrough')
+
+  t.deepEqual(obstruct({foo: 'bar'})({foo: 'bar', bar: 'baz'}), {
+    foo: 'baz'
+  }, 'source key')
+
+  t.deepEqual(obstruct({foo: 'a.bar'})({a: {bar: 'baz'}}), {
+    foo: 'baz'
+  }, 'dot props')
+
+  function uppercase (string) {
+    return string.toUpperCase()
+  }
+  t.deepEqual(obstruct({foo: uppercase})({foo: 'bar'}), {
+    foo: 'BAR'
+  }, 'fn transform')
+
+  t.deepEqual(obstruct({foo: {bar: uppercase}})({foo: {bar: 'baz'}}), {
+    foo: {bar: 'BAZ'}
+  }, 'nested schemas')
+
+  t.deepEqual(obstruct({a: ['foo', uppercase]})({foo: 'bar'}), {
+    a: 'BAR'
+  }, 'key change w/ fn transform')
+
+  t.deepEqual(obstruct({b: ['foo.bar', uppercase]})({foo: {bar: 'baz'}}), {
+    b: 'BAZ'
+  }, 'dot key change w/ fn transform')
+
+  t.deepEqual(obstruct({c: ['foo', {bar: uppercase}]})({foo: {bar: 'baz'}}), {
+    c: {bar: 'BAZ'}
+  }, 'key change w/ nested schema')
+
   t.deepEqual(obstruct({foo: true}, {foo: 'bar'}), {foo: 'bar'}, 'single call')
+
   var parse = obstruct({
     title: 'name',
     description: true,
@@ -52,6 +88,7 @@ test(function (t) {
     stars: ['BrendanEich'],
     writable: true,
     mine: true
-  })
+  }, 'all together now')
+
   t.end()
 })
