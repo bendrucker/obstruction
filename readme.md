@@ -39,7 +39,7 @@ Returns:
 
 ## API
 
-#### `obstruction(schema, [object])` -> `function` / `object`
+#### `obstruct(schema, [object])` -> `function` / `object`
 
 If only a schema is passed, a function with the `schema` partially applied will be returned. You can call that function with your `object`.
 
@@ -55,6 +55,42 @@ A schema object. See the [schema definition options](#schema-definition) for mor
 Type: `object`  
 
 The object to parse. If omitted, a partially applied function will be returned instead.
+
+#### `obstruct.array(schema)` -> `function`
+
+A convenience function for easily mapping arrays over a schema.
+
+##### schema
+
+*Required*  
+Type: `object` / `function`
+
+The schema used to map array items. This can be a plain object (which will be passed to `obstruct`) or the result of calling `obstruct(schema)` earlier. It can also any generic function for mapping values. The following are equivalent:
+
+Without `obstruct.array`:
+
+```js
+var parseState = obstruct({
+  abbrevation: 'abbrev'
+})
+obstruct({
+  states: function (states) {
+    return states.map(function (state) {
+      return parseState(state)
+    })
+  }
+})
+```
+
+With `obstruct.array`:
+
+```js
+obstruct({
+  states: obstruct.array({
+    abbreviation: 'abbrev'
+  })
+})
+```
 
 ## Schema Definitions
 

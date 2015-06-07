@@ -6,7 +6,17 @@ var mapObject = require('map-obj')
 var isArray = require('isarray')
 var dotProp = require('dot-prop')
 
-module.exports = obstruct
+exports = module.exports = obstruct
+
+exports.array = function arraySchema (schema) {
+  var parse = schema
+  if (typeof parse !== 'function') {
+    parse = obstruct(schema)
+  }
+  return function mapArray (array) {
+    return array.map(parse)
+  }
+}
 
 function obstruct (schema, object) {
   if (!isObject(schema)) {

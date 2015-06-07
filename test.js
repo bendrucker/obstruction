@@ -39,6 +39,17 @@ test('obstruction', function (t) {
     c: {bar: 'BAZ'}
   }, 'key change w/ nested schema')
 
+  t.deepEqual(obstruct({children: obstruct.array({name: uppercase})})({
+    children: [{name: 'ben'}, {name: 'rachel'}]
+  }), {
+    children: [{name: 'BEN'}, {name: 'RACHEL'}]
+  }, 'nested array')
+
+  t.deepEqual(obstruct.array(uppercase)(['Yankees', 'Giants']), [
+    'YANKEES',
+    'GIANTS'
+  ], 'mapping fn')
+
   t.deepEqual(obstruct({foo: true}, {foo: 'bar'}), {foo: 'bar'}, 'single call')
 
   var parse = obstruct({
