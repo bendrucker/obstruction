@@ -101,5 +101,9 @@ test('obstruction', function (t) {
     mine: true
   }, 'all together now')
 
+  t.throws(obstruct, 'schema object is required')
+  t.throws(obstruct({foo: ''}).bind(null, {}), /falsy values/)
+  t.throws(obstruct({'foo.bar': true}).bind(null, {}), /dots/)
+
   t.end()
 })
