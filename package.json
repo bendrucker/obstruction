@@ -1,0 +1,41 @@
+{
+  "name": "obstruction",
+  "main": "index.js",
+  "version": "0.0.0",
+  "description": "Parse and modify the schema of an object",
+  "license": "MIT",
+  "repository": "bendrucker/obstruction",
+  "author": {
+    "name": "Ben Drucker",
+    "email": "bvdrucker@gmail.com",
+    "url": "bendrucker.me"
+  },
+  "engines": {
+    "node": ">=0.10.0"
+  },
+  "scripts": {
+    "test": "standard && tape test.js | tap-difflet"
+  },
+  "keywords": [
+    "object",
+    "parse",
+    "schema",
+    "map"
+  ],
+  "dependencies": {
+    "ap": "^0.2.0",
+    "dot-prop": "^2.1.0",
+    "is-object": "^1.0.1",
+    "isarray": "0.0.1",
+    "map-obj": "^1.0.1"
+  },
+  "devDependencies": {
+    "standard": "^4.0.0",
+    "tap-difflet": "^0.3.0",
+    "tape": "^4.0.0"
+  },
+  "files": [
+    "index.js",
+    "readme.md"
+  ]
+}
