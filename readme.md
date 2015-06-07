@@ -103,7 +103,8 @@ Schema nodes can be:
 The value will be copied directly from the source object:
 
 ```js
-obstruct({foo: true})({foo: 'bar'}) // => {foo: 'bar'}
+obstruct({foo: true})({foo: 'bar'})
+// => {foo: 'bar'}
 ```
 
 #### a string
@@ -111,13 +112,15 @@ obstruct({foo: true})({foo: 'bar'}) // => {foo: 'bar'}
 The value will be copied from the source object using the supplied string as the source key:
 
 ```js
-obstruct({foo: 'bar'})({foo: 'bar', bar: 'baz'}) // => {foo: 'baz'}
+obstruct({foo: 'bar'})({foo: 'bar', bar: 'baz'})
+// => {foo: 'baz'}
 ```
 
 Strings can also use dot syntax to access deep properties:
 
 ```js
-obstruct({foo: 'a.bar'})({a: {bar: 'baz'}}) // => {foo: 'baz'}
+obstruct({foo: 'a.bar'})({a: {bar: 'baz'}})
+// => {foo: 'baz'}
 ```
 
 #### a function
@@ -128,7 +131,8 @@ The value from the source object will be passed through the supplied function:
 function uppercase (string) {
   return string.toUpperCase()
 }
-obstruct({foo: uppercase})({foo: 'bar'}) // => {foo: 'BAR'}
+obstruct({foo: uppercase})({foo: 'bar'})
+// => {foo: 'BAR'}
 ```
 
 The function also receives the original object as the second argument.
@@ -138,7 +142,9 @@ The function also receives the original object as the second argument.
 `obstruct` is called with the object and the source value at that keypath.
 
 ```js
-obstruct({foo: {bar: uppercase}})({foo: {bar: 'baz'}}) // => {foo: {bar: 'BAZ'}}
+obstruct({foo: {bar: uppercase}})({foo: {bar: 'baz'}})
+// => {foo: {bar: 'BAZ'}}
+```
 
 #### an array
 
@@ -148,9 +154,12 @@ Schema nodes can be an array where:
 * the second value is any other valid schema node value (`true`, string, function, object)
 
 ```js
-obstruct({a: ['foo', uppercase]})({foo: 'bar'}) // => {a: 'BAR'}
-obstruct({b: ['foo.bar', uppercase]})({foo: {bar: 'baz'}}) // => {b: 'BAZ'}
-obstruct({c: ['foo', {bar: uppercase}]})({foo: {bar: 'baz'}}) // => {c: {bar: 'BAZ'}}
+obstruct({a: ['foo', uppercase]})({foo: 'bar'})
+// => {a: 'BAR'}
+obstruct({b: ['foo.bar', uppercase]})({foo: {bar: 'baz'}})
+// => {b: 'BAZ'}
+obstruct({c: ['foo', {bar: uppercase}]})({foo: {bar: 'baz'}})
+// => {c: {bar: 'BAZ'}}
 ```
 
 ## License
