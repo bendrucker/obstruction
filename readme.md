@@ -92,6 +92,19 @@ obstruct({
 })
 ```
 
+#### `obstruct.optional(schema)` -> `function`
+
+A convenience function for easily mapping arrays over a schema.
+
+##### schema
+
+*Required*  
+Type: `object` / `function`
+
+The schema used to parse the value, if defined. This can be a plain object (which will be passed to `obstruct`) or the result of calling `obstruct(schema)` earlier. It can also any generic function for transforming values.
+
+If the source value is undefined, obstruct will immediately return `undefined` without calling your `schema`. This allows you to cleanly handle cases where a missing value might throw. 
+
 ## Schema Definitions
 
 A schema object represents the target object structure after parsing. You can nest schema objects to re-map nested objects. Schema nodes (the values in the schema object) control what value ultimately appears at a particular keypath in the final object.

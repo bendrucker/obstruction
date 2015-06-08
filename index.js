@@ -18,6 +18,18 @@ exports.array = function arraySchema (schema) {
   }
 }
 
+exports.optional = function optional (schema) {
+  var parse = schema
+  if (typeof parse !== 'function') {
+    parse = obstruct(schema)
+  }
+  return function optionalValue (value) {
+    if (typeof value !== 'undefined') {
+      return parse(value)
+    }
+  }
+}
+
 function obstruct (schema, object) {
   if (!isObject(schema)) {
     throw new Error('schema object is required')

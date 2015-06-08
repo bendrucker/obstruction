@@ -50,6 +50,15 @@ test('obstruction', function (t) {
     'GIANTS'
   ], 'mapping fn')
 
+  var uppercaseItems = obstruct.array(uppercase)
+  var required = obstruct({foo: uppercaseItems})
+  var optional = obstruct({foo: obstruct.optional(uppercaseItems)})
+  t.deepEqual(optional({foo: ['bar']}), {
+    foo: ['BAR']
+  })
+  t.throws(required.bind(null, {}), 'normally throws')
+  t.deepEqual(optional({}), {foo: undefined}, 'optional handles undefined value')
+
   t.deepEqual(obstruct({foo: true}, {foo: 'bar'}), {foo: 'bar'}, 'single call')
 
   var parse = obstruct({
