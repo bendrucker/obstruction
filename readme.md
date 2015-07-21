@@ -148,7 +148,7 @@ obstruct({foo: uppercase})({foo: 'bar'})
 // => {foo: 'BAR'}
 ```
 
-The function also receives the original object as the second argument.
+The function also receives the original object and the source key as additional arguments.
 
 #### an object
 

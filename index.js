@@ -64,7 +64,7 @@ function createParser (object) {
       result = dotProp.get(object, value)
     }
     if (typeof value === 'function') {
-      result = value(dotProp.get(object, srcKey), object)
+      result = value(dotProp.get(object, srcKey), object, srcKey)
     }
     if (isObject(value)) {
       result = obstruct(value, dotProp.get(object, srcKey))
