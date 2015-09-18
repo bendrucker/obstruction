@@ -101,7 +101,7 @@ A convenience function for easily mapping arrays over a schema.
 *Required*  
 Type: `object` / `function`
 
-The schema used to parse the value, if defined. This can be a plain object (which will be passed to `Obstruct`) or the result of calling `Obstruct(schema)` earlier. It can also any generic function for transforming values.
+The schema used to parse the value, if defined (not `undefined` or `null`). This can be a plain object (which will be passed to `Obstruct`) or the result of calling `Obstruct(schema)` earlier. It can also any generic function for transforming values.
 
 If the source value is undefined, Obstruct will immediately return `undefined` without calling your `schema`. This allows you to cleanly handle cases where a missing value might throw.
 

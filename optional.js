@@ -9,8 +9,6 @@ module.exports = function optional (schema) {
   }
 
   return function optionalValue (value) {
-    if (typeof value !== 'undefined') {
-      return parse(value)
-    }
+    if (value != null) return parse(value)
   }
 }
