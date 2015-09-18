@@ -59,6 +59,13 @@ test('obstruction', function (t) {
   t.throws(required.bind(null, {}), 'normally throws')
   t.deepEqual(optional({}), {foo: undefined}, 'optional handles undefined value')
 
+  var parent = Obstruct({foo: Obstruct.parent({bar: 'baz'})})
+  t.deepEqual(parent({baz: 'qux'}), {
+    foo: {
+      bar: 'qux'
+    }
+  })
+
   t.deepEqual(Obstruct({foo: true}, {foo: 'bar'}), {foo: 'bar'}, 'single call')
 
   var parse = Obstruct({

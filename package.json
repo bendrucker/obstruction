@@ -38,6 +38,7 @@
     "index.js",
     "obstruct.js",
     "optional.js",
-    "array.js"
+    "array.js",
+    "parent.js"
   ]
 }
