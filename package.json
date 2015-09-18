@@ -36,6 +36,8 @@
   },
   "files": [
     "index.js",
-    "readme.md"
+    "obstruct.js",
+    "optional.js",
+    "array.js"
   ]
 }
