@@ -1,67 +1,67 @@
 'use strict'
 
 var test = require('tape')
-var obstruct = require('./')
+var Obstruct = require('./')
 
 test('obstruction', function (t) {
-  t.deepEqual(obstruct({foo: true})({foo: 'bar'}), {
+  t.deepEqual(Obstruct({foo: true})({foo: 'bar'}), {
     foo: 'bar'
   }, 'passthrough')
 
-  t.deepEqual(obstruct({foo: 'bar'})({foo: 'bar', bar: 'baz'}), {
+  t.deepEqual(Obstruct({foo: 'bar'})({foo: 'bar', bar: 'baz'}), {
     foo: 'baz'
   }, 'source key')
 
-  t.deepEqual(obstruct({foo: 'a.bar'})({a: {bar: 'baz'}}), {
+  t.deepEqual(Obstruct({foo: 'a.bar'})({a: {bar: 'baz'}}), {
     foo: 'baz'
   }, 'dot props')
 
   function uppercase (string) {
     return string.toUpperCase()
   }
-  t.deepEqual(obstruct({foo: uppercase})({foo: 'bar'}), {
+  t.deepEqual(Obstruct({foo: uppercase})({foo: 'bar'}), {
     foo: 'BAR'
   }, 'fn transform')
 
-  t.deepEqual(obstruct({foo: {bar: uppercase}})({foo: {bar: 'baz'}}), {
+  t.deepEqual(Obstruct({foo: {bar: uppercase}})({foo: {bar: 'baz'}}), {
     foo: {bar: 'BAZ'}
   }, 'nested schemas')
 
-  t.deepEqual(obstruct({a: ['foo', uppercase]})({foo: 'bar'}), {
+  t.deepEqual(Obstruct({a: ['foo', uppercase]})({foo: 'bar'}), {
     a: 'BAR'
   }, 'key change w/ fn transform')
 
-  t.deepEqual(obstruct({b: ['foo.bar', uppercase]})({foo: {bar: 'baz'}}), {
+  t.deepEqual(Obstruct({b: ['foo.bar', uppercase]})({foo: {bar: 'baz'}}), {
     b: 'BAZ'
   }, 'dot key change w/ fn transform')
 
-  t.deepEqual(obstruct({c: ['foo', {bar: uppercase}]})({foo: {bar: 'baz'}}), {
+  t.deepEqual(Obstruct({c: ['foo', {bar: uppercase}]})({foo: {bar: 'baz'}}), {
     c: {bar: 'BAZ'}
   }, 'key change w/ nested schema')
 
-  t.deepEqual(obstruct({children: obstruct.array({name: uppercase})})({
+  t.deepEqual(Obstruct({children: Obstruct.array({name: uppercase})})({
     children: [{name: 'ben'}, {name: 'rachel'}]
   }), {
     children: [{name: 'BEN'}, {name: 'RACHEL'}]
   }, 'nested array')
 
-  t.deepEqual(obstruct.array(uppercase)(['Yankees', 'Giants']), [
+  t.deepEqual(Obstruct.array(uppercase)(['Yankees', 'Giants']), [
     'YANKEES',
     'GIANTS'
   ], 'mapping fn')
 
-  var uppercaseItems = obstruct.array(uppercase)
-  var required = obstruct({foo: uppercaseItems})
-  var optional = obstruct({foo: obstruct.optional(uppercaseItems)})
+  var uppercaseItems = Obstruct.array(uppercase)
+  var required = Obstruct({foo: uppercaseItems})
+  var optional = Obstruct({foo: Obstruct.optional(uppercaseItems)})
   t.deepEqual(optional({foo: ['bar']}), {
     foo: ['BAR']
   })
   t.throws(required.bind(null, {}), 'normally throws')
   t.deepEqual(optional({}), {foo: undefined}, 'optional handles undefined value')
 
-  t.deepEqual(obstruct({foo: true}, {foo: 'bar'}), {foo: 'bar'}, 'single call')
+  t.deepEqual(Obstruct({foo: true}, {foo: 'bar'}), {foo: 'bar'}, 'single call')
 
-  var parse = obstruct({
+  var parse = Obstruct({
     title: 'name',
     description: true,
     active: ['status', function (status) {
@@ -110,9 +110,9 @@ test('obstruction', function (t) {
     mine: true
   }, 'all together now')
 
-  t.throws(obstruct, 'schema object is required')
-  t.throws(obstruct({foo: ''}).bind(null, {}), /falsy values/)
-  t.throws(obstruct({'foo.bar': true}).bind(null, {}), /dots/)
+  t.throws(Obstruct, 'schema object is required')
+  t.throws(Obstruct({foo: ''}).bind(null, {}), /falsy values/)
+  t.throws(Obstruct({'foo.bar': true}).bind(null, {}), /dots/)
 
   t.end()
 })

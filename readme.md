@@ -12,14 +12,14 @@ $ npm install --save obstruction
 ## Usage
 
 ```js
-var obstruct = require('obstruction')
-var parse = obstruct({
+var Obstruct = require('obstruction')
+var parse = Obstruct({
   title: 'name',
   description: true,
   author: 'author.login'
 })
 parse({
-  name: 'Obstruction',
+  name: 'obstruction',
   description: 'Object restructuring and parsing',
   author: {
     login: 'bendrucker'
@@ -31,7 +31,7 @@ Returns:
 
 ```js
 {
-  title: 'Obstruction',
+  title: 'obstruction',
   description: 'Object restructuring and parsing',
   author: 'bendrucker'
 }
@@ -39,7 +39,7 @@ Returns:
 
 ## API
 
-#### `obstruct(schema, [object])` -> `function` / `object`
+#### `Obstruct(schema, [object])` -> `function` / `object`
 
 If only a schema is passed, a function with the `schema` partially applied will be returned. You can call that function with your `object`.
 
@@ -56,7 +56,7 @@ Type: `object`
 
 The object to parse. If omitted, a partially applied function will be returned instead.
 
-#### `obstruct.array(schema)` -> `function`
+#### `Obstruct.array(schema)` -> `function`
 
 A convenience function for easily mapping arrays over a schema.
 
@@ -65,15 +65,15 @@ A convenience function for easily mapping arrays over a schema.
 *Required*  
 Type: `object` / `function`
 
-The schema used to map array items. This can be a plain object (which will be passed to `obstruct`) or the result of calling `obstruct(schema)` earlier. It can also any generic function for mapping values. The following are equivalent:
+The schema used to map array items. This can be a plain object (which will be passed to `Obstruct`) or the result of calling `Obstruct(schema)` earlier. It can also any generic function for mapping values. The following are equivalent:
 
-Without `obstruct.array`:
+Without `Obstruct.array`:
 
 ```js
-var parseState = obstruct({
+var parseState = Obstruct({
   abbrevation: 'abbrev'
 })
-obstruct({
+Obstruct({
   states: function (states) {
     return states.map(function (state) {
       return parseState(state)
@@ -82,17 +82,17 @@ obstruct({
 })
 ```
 
-With `obstruct.array`:
+With `Obstruct.array`:
 
 ```js
-obstruct({
-  states: obstruct.array({
+Obstruct({
+  states: Obstruct.array({
     abbreviation: 'abbrev'
   })
 })
 ```
 
-#### `obstruct.optional(schema)` -> `function`
+#### `Obstruct.optional(schema)` -> `function`
 
 A convenience function for easily mapping arrays over a schema.
 
@@ -101,9 +101,9 @@ A convenience function for easily mapping arrays over a schema.
 *Required*  
 Type: `object` / `function`
 
-The schema used to parse the value, if defined. This can be a plain object (which will be passed to `obstruct`) or the result of calling `obstruct(schema)` earlier. It can also any generic function for transforming values.
+The schema used to parse the value, if defined. This can be a plain object (which will be passed to `Obstruct`) or the result of calling `Obstruct(schema)` earlier. It can also any generic function for transforming values.
 
-If the source value is undefined, obstruct will immediately return `undefined` without calling your `schema`. This allows you to cleanly handle cases where a missing value might throw. 
+If the source value is undefined, Obstruct will immediately return `undefined` without calling your `schema`. This allows you to cleanly handle cases where a missing value might throw. 
 
 ## Schema Definitions
 
@@ -116,7 +116,7 @@ Schema nodes can be:
 The value will be copied directly from the source object:
 
 ```js
-obstruct({foo: true})({foo: 'bar'})
+Obstruct({foo: true})({foo: 'bar'})
 // => {foo: 'bar'}
 ```
 
@@ -125,14 +125,14 @@ obstruct({foo: true})({foo: 'bar'})
 The value will be copied from the source object using the supplied string as the source key:
 
 ```js
-obstruct({foo: 'bar'})({foo: 'bar', bar: 'baz'})
+Obstruct({foo: 'bar'})({foo: 'bar', bar: 'baz'})
 // => {foo: 'baz'}
 ```
 
 Strings can also use dot syntax to access deep properties:
 
 ```js
-obstruct({foo: 'a.bar'})({a: {bar: 'baz'}})
+Obstruct({foo: 'a.bar'})({a: {bar: 'baz'}})
 // => {foo: 'baz'}
 ```
 
@@ -144,7 +144,7 @@ The value from the source object will be passed through the supplied function:
 function uppercase (string) {
   return string.toUpperCase()
 }
-obstruct({foo: uppercase})({foo: 'bar'})
+Obstruct({foo: uppercase})({foo: 'bar'})
 // => {foo: 'BAR'}
 ```
 
@@ -152,10 +152,10 @@ The function also receives the original object and the source key as additional 
 
 #### an object
 
-`obstruct` is called with the object and the source value at that keypath.
+`Obstruct` is called with the object and the source value at that keypath.
 
 ```js
-obstruct({foo: {bar: uppercase}})({foo: {bar: 'baz'}})
+Obstruct({foo: {bar: uppercase}})({foo: {bar: 'baz'}})
 // => {foo: {bar: 'BAZ'}}
 ```
 
@@ -167,11 +167,11 @@ Schema nodes can be an array where:
 * the second value is any other valid schema node value (`true`, string, function, object)
 
 ```js
-obstruct({a: ['foo', uppercase]})({foo: 'bar'})
+Obstruct({a: ['foo', uppercase]})({foo: 'bar'})
 // => {a: 'BAR'}
-obstruct({b: ['foo.bar', uppercase]})({foo: {bar: 'baz'}})
+Obstruct({b: ['foo.bar', uppercase]})({foo: {bar: 'baz'}})
 // => {b: 'BAZ'}
-obstruct({c: ['foo', {bar: uppercase}]})({foo: {bar: 'baz'}})
+Obstruct({c: ['foo', {bar: uppercase}]})({foo: {bar: 'baz'}})
 // => {c: {bar: 'BAZ'}}
 ```
 
