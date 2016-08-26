@@ -53,7 +53,7 @@ function createParser (object) {
     }
 
     if (isObject(value)) {
-      result = Obstruct(value, dotProp.get(object, srcKey))
+      result = Obstruct(value, dotProp.get(object, srcKey) || {})
     }
 
     return [key, result]

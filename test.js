@@ -124,3 +124,25 @@ test('obstruction', function (t) {
 
   t.end()
 })
+
+test('obstruction: schema object but no data object', function (t) {
+  const obstruct = Obstruct({
+    deeply: {
+      nested: true
+    }
+  })
+
+  t.deepEqual(
+    obstruct({}),
+    {deeply: {nested: undefined}},
+    'works when data has no object'
+  )
+
+  t.deepEqual(
+    obstruct({deeply: {nested: 'foo'}}),
+    {deeply: {nested: 'foo'}},
+    'works when data has object'
+  )
+
+  t.end()
+})
