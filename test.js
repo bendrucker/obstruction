@@ -4,45 +4,45 @@ var test = require('tape')
 var Obstruct = require('./')
 
 test('obstruction', function (t) {
-  t.deepEqual(Obstruct({foo: true})({foo: 'bar'}), {
+  t.deepEqual(Obstruct({ foo: true })({ foo: 'bar' }), {
     foo: 'bar'
   }, 'passthrough')
 
-  t.deepEqual(Obstruct({foo: 'bar'})({foo: 'bar', bar: 'baz'}), {
+  t.deepEqual(Obstruct({ foo: 'bar' })({ foo: 'bar', bar: 'baz' }), {
     foo: 'baz'
   }, 'source key')
 
-  t.deepEqual(Obstruct({foo: 'a.bar'})({a: {bar: 'baz'}}), {
+  t.deepEqual(Obstruct({ foo: 'a.bar' })({ a: { bar: 'baz' } }), {
     foo: 'baz'
   }, 'dot props')
 
   function uppercase (string) {
     return string.toUpperCase()
   }
-  t.deepEqual(Obstruct({foo: uppercase})({foo: 'bar'}), {
+  t.deepEqual(Obstruct({ foo: uppercase })({ foo: 'bar' }), {
     foo: 'BAR'
   }, 'fn transform')
 
-  t.deepEqual(Obstruct({foo: {bar: uppercase}})({foo: {bar: 'baz'}}), {
-    foo: {bar: 'BAZ'}
+  t.deepEqual(Obstruct({ foo: { bar: uppercase } })({ foo: { bar: 'baz' } }), {
+    foo: { bar: 'BAZ' }
   }, 'nested schemas')
 
-  t.deepEqual(Obstruct({a: ['foo', uppercase]})({foo: 'bar'}), {
+  t.deepEqual(Obstruct({ a: ['foo', uppercase] })({ foo: 'bar' }), {
     a: 'BAR'
   }, 'key change w/ fn transform')
 
-  t.deepEqual(Obstruct({b: ['foo.bar', uppercase]})({foo: {bar: 'baz'}}), {
+  t.deepEqual(Obstruct({ b: ['foo.bar', uppercase] })({ foo: { bar: 'baz' } }), {
     b: 'BAZ'
   }, 'dot key change w/ fn transform')
 
-  t.deepEqual(Obstruct({c: ['foo', {bar: uppercase}]})({foo: {bar: 'baz'}}), {
-    c: {bar: 'BAZ'}
+  t.deepEqual(Obstruct({ c: ['foo', { bar: uppercase }] })({ foo: { bar: 'baz' } }), {
+    c: { bar: 'BAZ' }
   }, 'key change w/ nested schema')
 
-  t.deepEqual(Obstruct({children: Obstruct.array({name: uppercase})})({
-    children: [{name: 'ben'}, {name: 'rachel'}]
+  t.deepEqual(Obstruct({ children: Obstruct.array({ name: uppercase }) })({
+    children: [{ name: 'ben' }, { name: 'rachel' }]
   }), {
-    children: [{name: 'BEN'}, {name: 'RACHEL'}]
+    children: [{ name: 'BEN' }, { name: 'RACHEL' }]
   }, 'nested array')
 
   t.deepEqual(Obstruct.array(uppercase)(['Yankees', 'Giants']), [
@@ -51,23 +51,23 @@ test('obstruction', function (t) {
   ], 'mapping fn')
 
   var uppercaseItems = Obstruct.array(uppercase)
-  var required = Obstruct({foo: uppercaseItems})
-  var optional = Obstruct({foo: Obstruct.optional(uppercaseItems)})
-  t.deepEqual(optional({foo: ['bar']}), {
+  var required = Obstruct({ foo: uppercaseItems })
+  var optional = Obstruct({ foo: Obstruct.optional(uppercaseItems) })
+  t.deepEqual(optional({ foo: ['bar'] }), {
     foo: ['BAR']
   })
   t.throws(required.bind(null, {}), 'normally throws')
-  t.deepEqual(optional({}), {foo: undefined}, 'optional handles undefined value')
-  t.deepEqual(optional({foo: null}), {foo: undefined}, 'optional handles null value')
+  t.deepEqual(optional({}), { foo: undefined }, 'optional handles undefined value')
+  t.deepEqual(optional({ foo: null }), { foo: undefined }, 'optional handles null value')
 
-  var parent = Obstruct({foo: Obstruct.parent({bar: 'baz'})})
-  t.deepEqual(parent({baz: 'qux'}), {
+  var parent = Obstruct({ foo: Obstruct.parent({ bar: 'baz' }) })
+  t.deepEqual(parent({ baz: 'qux' }), {
     foo: {
       bar: 'qux'
     }
   })
 
-  t.deepEqual(Obstruct({foo: true}, {foo: 'bar'}), {foo: 'bar'}, 'single call')
+  t.deepEqual(Obstruct({ foo: true }, { foo: 'bar' }), { foo: 'bar' }, 'single call')
 
   var parse = Obstruct({
     title: 'name',
@@ -119,8 +119,8 @@ test('obstruction', function (t) {
   }, 'all together now')
 
   t.throws(Obstruct, 'schema object is required')
-  t.throws(Obstruct({foo: ''}).bind(null, {}), /falsy values/)
-  t.throws(Obstruct({'foo.bar': true}).bind(null, {}), /dots/)
+  t.throws(Obstruct({ foo: '' }).bind(null, {}), /falsy values/)
+  t.throws(Obstruct({ 'foo.bar': true }).bind(null, {}), /dots/)
 
   t.end()
 })
@@ -134,13 +134,13 @@ test('obstruction: schema object but no data object', function (t) {
 
   t.deepEqual(
     obstruct({}),
-    {deeply: {nested: undefined}},
+    { deeply: { nested: undefined } },
     'works when data has no object'
   )
 
   t.deepEqual(
-    obstruct({deeply: {nested: 'foo'}}),
-    {deeply: {nested: 'foo'}},
+    obstruct({ deeply: { nested: 'foo' } }),
+    { deeply: { nested: 'foo' } },
     'works when data has object'
   )
 

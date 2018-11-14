@@ -1,4 +1,4 @@
-# obstruction [![Build Status](https://travis-ci.org/bendrucker/obstruction.svg?branch=master)](https://travis-ci.org/bendrucker/obstruction)
+# obstruction [![Build Status](https://travis-ci.org/bendrucker/obstruction.svg?branch=master)](https://travis-ci.org/bendrucker/obstruction) [![Greenkeeper badge](https://badges.greenkeeper.io/bendrucker/obstruction.svg)](https://greenkeeper.io/)
 
 > Declarative parser for remapping object schemas and data
 
