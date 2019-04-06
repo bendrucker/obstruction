@@ -24,7 +24,7 @@
   ],
   "dependencies": {
     "ap": "~0.2.0",
-    "dot-prop": "~4.2.0",
+    "dot-prop": "~5.0.0",
     "is-object": "~1.0.1",
     "isarray": "2.0.4",
     "map-obj": "~3.0.0"
