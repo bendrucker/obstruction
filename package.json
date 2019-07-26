@@ -26,7 +26,7 @@
     "ap": "~0.2.0",
     "dot-prop": "~5.1.0",
     "is-object": "~1.0.1",
-    "isarray": "2.0.4",
+    "isarray": "2.0.5",
     "map-obj": "~4.1.0"
   },
   "devDependencies": {
