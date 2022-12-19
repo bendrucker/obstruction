@@ -2,9 +2,10 @@
 
 var isObject = require('is-object')
 var dotProp = require('dot-prop')
-var isArray = require('isarray')
 var mapObject = require('map-obj')
 var partial = require('ap').partial
+
+var isArray = Array.isArray
 
 module.exports = Obstruct
 
